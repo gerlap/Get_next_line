@@ -1,0 +1,9 @@
+1)https://github.com/suspectedoceano/get_next_line/commits?author=suspectedoceano
+full explanation and working files
+2)https://github.com/Tripouille/gnlTester
+tester for gnl
+3)https://42-cursus.gitbook.io/guide/rank-01/get_next_line
+another completed gnl task
+4)https://medium.com/@lannur-s/gnl-c3cff1ee552b
+5)https://github.com/cvrs3d/42prague-core-gnl/blob/master/get_next_line_bonus.h
+6)https://github.com/okraus42
