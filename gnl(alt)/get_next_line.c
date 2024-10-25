@@ -6,7 +6,7 @@
 /*   By: glapshin <glapshin@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:08:34 by glapshin          #+#    #+#             */
-/*   Updated: 2024/10/22 21:11:32 by glapshin         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:27:28 by glapshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*get_next_line(int fd)
 	create_list(&list, fd);
 	if (list == NULL)
 		return NULL;
-	next_line = find_nl(list);
-
+	next_line = get_line(list);
+	return (next_line);
 }
 void create_list(t_list **list, int fd)
 {
@@ -34,9 +34,15 @@ void create_list(t_list **list, int fd)
 		buffer = malloc(BUFFER_SIZE + 1);
 		if (buffer == NULL)
 			return ;
-	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	if(!)
+	if(!bytes_read)
+	{
+		free(buffer);
+		return ;
+	}
+	buffer[bytes_read] = '\0';
+	append(list, buffer);
+	}
 }
 int find_nl(t_list *list)// check if node exists
 {
@@ -55,6 +61,7 @@ int find_nl(t_list *list)// check if node exists
 		}
 		list = list->next;
 	}
+	return (0);
 }
 int main()
 {
