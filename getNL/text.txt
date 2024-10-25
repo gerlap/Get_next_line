@@ -1,2 +1,0 @@
-• Your project must be written in C.
-cvfev
