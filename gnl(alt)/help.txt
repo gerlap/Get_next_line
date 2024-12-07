@@ -1,0 +1,6 @@
+hellohello123
+something
+https://medium.com/@akaashnath/data-structure-list-534d37097b9f
+https://www.educative.io/answers/read-data-from-a-file-using-read-in-c
+https://42-cursus.gitbook.io/guide/rank-01/get_next_line/open-and-read
+https://www.geeksforgeeks.org/static-variables-in-c/
