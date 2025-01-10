@@ -6,36 +6,12 @@
 /*   By: glapshin <glapshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:15:34 by glapshin          #+#    #+#             */
-/*   Updated: 2025/01/10 20:23:53 by glapshin         ###   ########.fr       */
+/*   Updated: 2025/01/10 21:41:47 by glapshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <string.h>
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*array;
-
-	if (!count || !size)
-		return (NULL);
-	if (count > (size_t)-1 / size)
-		return (NULL);
-	array = (char *)malloc(size * count);
-	if (array == NULL)
-		return (NULL);
-	return (ft_memset(array, 0, size * count));
-}
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	*temp;
-
-	temp = (unsigned char *)b;
-	while (len-- > 0)
-		*temp++ = (unsigned char)c;
-	return (b);
-}
 
 char	*ft_strchr( const char *s, int c)
 {
@@ -87,37 +63,20 @@ char	*ft_strdup(const char *src)
 {
 	size_t	size;
 	char	*dest;
-	size_t	i;
 
 	if (!src)
 		return (NULL);
-	size = 0;
-	i = size;
-	while (src[size])
-		size++;
-	dest = malloc(sizeof(char) * (size + 1));
+	dest = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
-	while (i < size)
+	size = 0;
+	while (src[size])
 	{
-		dest[i] = src[i];
-		i++;
+		dest[size] = src[size];
+		size++;
 	}
-	dest[i] = '\0';
+	dest[size] = '\0';
 	return (dest);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	src_len;
-
-	src_len = ft_strlen(src);
-	if (NULL == dst || NULL == src || !dstsize)
-		return (src_len);
-	while (*src && --dstsize)
-		*dst++ = *src++;
-	*dst = '\0';
-	return (src_len);
 }
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)

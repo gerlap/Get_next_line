@@ -6,11 +6,24 @@
 /*   By: glapshin <glapshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:40:17 by glapshin          #+#    #+#             */
-/*   Updated: 2025/01/10 20:06:53 by glapshin         ###   ########.fr       */
+/*   Updated: 2025/01/10 21:43:45 by glapshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	src_len;
+
+	src_len = ft_strlen(src);
+	if (NULL == dst || NULL == src || !dstsize)
+		return (src_len);
+	while (*src && --dstsize)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (src_len);
+}
 
 char	*reader(char **basin_buffer, char *buffer, int fd)
 {
@@ -24,8 +37,7 @@ char	*reader(char **basin_buffer, char *buffer, int fd)
 		if (bytes_read <= 0)
 			return (free(buffer), NULL);
 		buffer[bytes_read] = '\0';
-		temp_buffer = *basin_buffer;
-		temp_buffer = ft_strjoin(temp_buffer, buffer);
+		temp_buffer = ft_strjoin(*basin_buffer, buffer);
 		if (!temp_buffer)
 			return (free(buffer), NULL);
 		free(*basin_buffer);
@@ -75,13 +87,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!global_buffer)
 		global_buffer = ft_strdup("");
-	if (!global_buffer)
-		return (NULL);
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return (free(global_buffer), NULL);
 	global_buffer = reader(&global_buffer, buffer, fd);
 	line = extract_line(global_buffer);
-	global_buffer = update_buffer(&global_buffer, line);
+	global_buffer = update_buffer(&global_buffer, line);	
+	if (!global_buffer)
+		return (free(global_buffer), NULL);
 	return (line);
 }
