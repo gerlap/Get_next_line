@@ -8,7 +8,7 @@ int main(void)
 	int		count;
 
 	count = 0;
-	fd = open(".text.txt",O_CREAT | O_RDONLY);
+	fd = open(".1char.txt",O_CREAT | O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Error opening file");
@@ -17,13 +17,15 @@ int main(void)
 	while (1)
 	{
 		next_line = get_next_line(fd);
-		if (next_line == NULL || count == 20)
+		if (next_line == NULL)
 			break ;
 		count++;
 		printf("[%d]:%s\n", count, next_line);
 		free(next_line);
 		next_line = NULL;
 	}
+	printf("[%d]:%s\n", count, next_line);
+	free(next_line);
 	close(fd);
 	return (0);
 }
