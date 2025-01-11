@@ -6,7 +6,7 @@
 /*   By: glapshin <glapshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:40:17 by glapshin          #+#    #+#             */
-/*   Updated: 2025/01/11 16:27:39 by glapshin         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:55:14 by glapshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (src_len);
 }
 
-void	reader(char **basin_buffer, char *buffer, int fd)
+void	reader(char **global_buffer, char *buffer, int fd)
 {
 	char	*temp_buffer;
 	int		bytes_read;
@@ -37,45 +37,33 @@ void	reader(char **basin_buffer, char *buffer, int fd)
 		if (bytes_read < 0)
 		{
 			free(buffer);
-			free(*basin_buffer);
-			*basin_buffer = NULL;
-			return ;
-		}
-		if (bytes_read == 0)
-		{
-			free(buffer);
+			free(*global_buffer);
+			*global_buffer = NULL;
 			return ;
 		}
 		buffer[bytes_read] = '\0';
-		temp_buffer = ft_strjoin(*basin_buffer, buffer);
-		if (!temp_buffer)
-		{
-			free(buffer);
-			free(*basin_buffer);
-			*basin_buffer = NULL;
-			return ;
-		}
-		free(*basin_buffer);
-		*basin_buffer = temp_buffer;
+		temp_buffer = *global_buffer;
+		*global_buffer = ft_strjoin(*global_buffer, buffer);
+		free(temp_buffer);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	free (buffer);
 }
 
-char	*extract_line(char *basin_buffer)
+char	*extract_line(char *global_buffer)
 {
 	char	*line;
 	int		i;
 
-	if (!basin_buffer)
+	if (!global_buffer)
 		return (NULL);
 	i = 0;
-	while (basin_buffer[i] != '\n' && basin_buffer[i] != '\0')
+	while (global_buffer[i] != '\n' && global_buffer[i] != '\0')
 		i++;
-	if (basin_buffer[i] == '\n')
+	if (global_buffer[i] == '\n')
 		i++;
-	line = ft_substr(basin_buffer, 0, i);
+	line = ft_substr(global_buffer, 0, i);
 	if (!line)
 		return (NULL);
 	return (line);
